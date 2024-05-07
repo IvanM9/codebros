@@ -31,7 +31,7 @@ export class UsersService {
         throw new BadRequestException('Usuario ya registrado');
       });
 
-    return { message: 'Consultor creado' };
+    return { message: 'Se ha registrado correctamente' };
   }
 
   async registerInformation(
@@ -130,26 +130,51 @@ export class UsersService {
     });
 
     const skills = data.skills.forEach(async (skill) => {
-      await this.db.skill
-        .create({
-          data: {
-            consultants: {
-              connect: {
-                id: consultant.id,
+      const skillAux = await this.db.skill.findUnique({
+        where: {
+          name: skill.name,
+        },
+      });
+
+      if (skillAux) {
+        await this.db.skill
+          .update({
+            where: {
+              name: skill.name,
+            },
+            data: {
+              consultants: {
+                connect: {
+                  id: consultant.id,
+                },
               },
             },
-            name: skill.name,
-            type: skill.type,
-          },
-        })
-        .catch(() => {
-          throw new BadRequestException('Error al registrar habilidades');
-        });
+          })
+          .catch(() => {
+            throw new BadRequestException('Error al registrar habilidades');
+          });
+      } else {
+        await this.db.skill
+          .create({
+            data: {
+              consultants: {
+                connect: {
+                  id: consultant.id,
+                },
+              },
+              name: skill.name,
+              type: skill.type,
+            },
+          })
+          .catch(() => {
+            throw new BadRequestException('Error al registrar habilidades');
+          });
+      }
     });
 
     await Promise.all([certifications, experiences, languages, skills]);
 
-    return { message: 'Información registrada' };
+    return { message: 'Se ha completado la información correctamente' };
   }
 
   async getConsultant(userId: string) {

@@ -62,7 +62,7 @@ export class RegisterInformationConsultant {
   @IsString()
   location: string;
 
-  @ApiProperty({ description: 'Zona horaria', example: 'America/Mexico_City' })
+  @ApiProperty({ description: 'Zona horaria', example: 'America/Guayaquil' })
   @IsString()
   timeZone: string;
 
