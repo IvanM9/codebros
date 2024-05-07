@@ -1,5 +1,12 @@
+import Header from '../components/Header'
+
 const Landing = () => {
-  return <div>Landing de rata</div>
+  return (
+    <>
+      <Header />
+      <h1>Codebros</h1>
+    </>
+  )
 }
 
 export default Landing
