@@ -43,16 +43,16 @@ model Consultant {
   createdAt              DateTime          @default(now()) @map("created_at")
   updatedAt              DateTime          @updatedAt @map("updated_at")
   location               String?
-  rate                   Float?
   timeZone               String?           @map("time_zone")
   employmentStatus       EmploymentStatus? @map("employment_status")
   availableHours         Int?              @map("available_hours")
   willingToTravel        Boolean?          @map("willing_to_travel")
   provisionForRemoteWork Boolean?          @map("provision_for_remote_work")
-  feeFees                Float?            @map("fee_fees")
+  feeFees                Decimal?          @map("fee_fees")
   portfolio              String?           @map("portfolio")
   linkedIn               String?
   github                 String?
+  isBusy                 Boolean           @default(false) @map("is_busy")
 
   skills             Skill[]
   languages          Language[]
@@ -71,7 +71,7 @@ enum EmploymentStatus {
 
 model Skill {
   id        String    @id @default(cuid())
-  name      String
+  name      String    @unique
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   type      TypeSkill
@@ -112,11 +112,11 @@ model Experience {
   title        String
   company      String
   location     String
-  startDate    DateTime   @map("start_date")
-  endDate      DateTime   @map("end_date")
+  startDate    DateTime   @map("start_date") @db.Date
+  endDate      DateTime   @map("end_date") @db.Date
   position     String
-  description  String
-  industry     String
+  description  String?
+  industry     String?
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @updatedAt @map("updated_at")
   consultant   Consultant @relation(fields: [consultantId], references: [id])
@@ -130,9 +130,9 @@ model Certification {
   name         String
   authority    String
   license      String
-  startDate    DateTime   @map("start_date")
-  endDate      DateTime   @map("end_date")
-  url          String
+  startDate    DateTime   @map("start_date") @db.Date
+  endDate      DateTime   @map("end_date") @db.Date
+  url          String?
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @updatedAt @map("updated_at")
   consultant   Consultant @relation(fields: [consultantId], references: [id])
