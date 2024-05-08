@@ -10,13 +10,31 @@ import {
 } from 'src/dtos/users.dto';
 import { PrismaService } from 'src/prisma.service';
 import { RoleEnum } from 'src/security/jwt-strategy/role.enum';
+import { ExperiencesService } from './experiences.service';
+import { LanguagesService } from './languages.service';
+import { SkillsService } from './skills.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private db: PrismaService) {}
+  constructor(
+    private db: PrismaService,
+    private experienceService: ExperiencesService,
+    private languageService: LanguagesService,
+    private skillService: SkillsService,
+  ) {}
 
   async createConsultant(data: CreateUserDto) {
-    this.db.user
+    const exist = await this.db.user.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (exist) {
+      throw new BadRequestException('El usario ya está registrado');
+    }
+
+    await this.db.user
       .create({
         data: {
           email: data.email,
@@ -28,7 +46,7 @@ export class UsersService {
         },
       })
       .catch(() => {
-        throw new BadRequestException('Usuario ya registrado');
+        throw new BadRequestException('Error al registrar usuario');
       });
 
     return { message: 'Se ha registrado correctamente' };
@@ -38,7 +56,7 @@ export class UsersService {
     data: RegisterInformationConsultant,
     userId: string,
   ) {
-    this.db.user
+    await this.db.user
       .findUnique({
         where: {
           id: userId,
@@ -92,84 +110,15 @@ export class UsersService {
     );
 
     const experiences = data.experiences.forEach(async (experience) => {
-      await this.db.experience
-        .create({
-          data: {
-            consultantId: consultant.id,
-            title: experience.title,
-            company: experience.company,
-            position: experience.position,
-            location: experience.location,
-            startDate: experience.startDate,
-            endDate: experience.endDate,
-            description: experience.description,
-            industry: experience.industry,
-          },
-        })
-        .catch(() => {
-          throw new BadRequestException('Error al registrar experiencias');
-        });
+      await this.experienceService.addExperience(experience, consultant.id);
     });
 
     const languages = data.languages.forEach(async (language) => {
-      await this.db.language
-        .create({
-          data: {
-            consultants: {
-              connect: {
-                id: consultant.id,
-              },
-            },
-            name: language.name,
-            level: language.level,
-          },
-        })
-        .catch(() => {
-          throw new BadRequestException('Error al registrar idiomas');
-        });
+      await this.languageService.addLanguage(language, consultant.id);
     });
 
     const skills = data.skills.forEach(async (skill) => {
-      const skillAux = await this.db.skill.findUnique({
-        where: {
-          name: skill.name,
-        },
-      });
-
-      if (skillAux) {
-        await this.db.skill
-          .update({
-            where: {
-              name: skill.name,
-            },
-            data: {
-              consultants: {
-                connect: {
-                  id: consultant.id,
-                },
-              },
-            },
-          })
-          .catch(() => {
-            throw new BadRequestException('Error al registrar habilidades');
-          });
-      } else {
-        await this.db.skill
-          .create({
-            data: {
-              consultants: {
-                connect: {
-                  id: consultant.id,
-                },
-              },
-              name: skill.name,
-              type: skill.type,
-            },
-          })
-          .catch(() => {
-            throw new BadRequestException('Error al registrar habilidades');
-          });
-      }
+      await this.skillService.addSkill(skill, consultant.id);
     });
 
     await Promise.all([certifications, experiences, languages, skills]);
