@@ -1,16 +1,28 @@
 import { useForm } from 'react-hook-form'
 import { Error } from '../components/Error'
 import type { DraftDeveloper } from '../types'
+import { registerRequest } from '../api/auth'
+import { toast } from 'react-toastify'
+import { useLocation } from 'wouter'
 
 const Register = () => {
+  const [, navigate] = useLocation()
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<DraftDeveloper>()
 
-  function registerDeveloper(data: DraftDeveloper) {
-    console.log(data)
+  async function registerDeveloper(data: DraftDeveloper) {
+    const resRegister = await registerRequest(data)
+    if (resRegister?.status === 201 || resRegister?.status === 200) {
+      reset()
+      toast.success(resRegister?.data.message)
+      navigate('/login')
+    } else {
+      toast.error(resRegister?.data.message)
+    }
   }
 
   return (
@@ -25,15 +37,15 @@ const Register = () => {
             Nombres
           </label>
           <input
-            id='name'
+            id='firstName'
             className='w-full p-3  border border-gray-100'
             type='text'
             placeholder='Code'
-            {...register('name', {
+            {...register('firstName', {
               required: 'El nombre es obligatorio',
             })}
           />
-          {errors.name && <Error>{errors.name?.message}</Error>}
+          {errors.firstName && <Error>{errors.firstName?.message}</Error>}
         </div>
 
         <div className='mb-5'>
@@ -93,15 +105,15 @@ const Register = () => {
         </div>
 
         <div className='mb-5'>
-          <label htmlFor='tel' className='text-sm uppercase font-bold'>
+          <label htmlFor='phone' className='text-sm uppercase font-bold'>
             Telefono
           </label>
           <input
-            id='tel'
+            id='phone'
             className='w-full p-3  border border-gray-100'
             type='tel'
-            {...register('tel', {
-              required: 'La contraseña es obligatoria',
+            {...register('phone', {
+              required: 'El telefono es obligatorio',
               pattern: {
                 value: /^\d{10}$/,
                 message:
@@ -109,7 +121,7 @@ const Register = () => {
               },
             })}
           />
-          {errors.tel && <Error>{errors.tel?.message}</Error>}
+          {errors.phone && <Error>{errors.phone?.message}</Error>}
         </div>
 
         <input

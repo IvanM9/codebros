@@ -1,10 +1,15 @@
 export type Developer = {
     id: string
-    name: string
-    lastName: string
     email: string
     password: string
-    tel: string
+    firstName: string
+    lastName: string
+    phone: string
+}
+
+export type LoginUser = {
+    password: string
+    email: string
 }
 
 export type DraftDeveloper = Omit<Developer, 'id'> 
