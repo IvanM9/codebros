@@ -34,14 +34,14 @@ export const useSkillsStore = create<SkillsFormState>((set) => ({
 
 interface Languages {
     id: string;
-    value: string;
+    name: string;
     level: string;
 }
 
 interface LanguagesFormState {
     languages: Languages[];
     addLanguage: () => void;
-    handleLanguageChange: (id: string, field: 'value' | 'level', value: string) => void;
+    handleLanguageChange: (id: string, field: 'name' | 'level', value: string) => void;
     removeLanguage: (id: string) => void;
 }
 
@@ -147,12 +147,12 @@ export const useLanguagesStore = create<LanguagesFormState>((set) => ({
     languages: [],
     addLanguage: () =>
         set((state) => ({
-            languages: [...state.languages, { id: uuidv4(), value: '', level: '' }],
+            languages: [...state.languages, { id: uuidv4(), name: '', level: '' }],
         })),
-    handleLanguageChange: (id, field, value) =>
+    handleLanguageChange: (id, field, name) =>
         set((state) => ({
             languages: state.languages.map((skill) =>
-                skill.id === id ? { ...skill, [field]: value } : skill
+                skill.id === id ? { ...skill, [field]: name } : skill
             ),
         })),
     removeLanguage: (id) =>

@@ -7,6 +7,8 @@ import {
   useLanguagesStore,
   useSkillsStore,
 } from '../store/consultData'
+import { registerInformationConsult } from '../api/auth'
+import { FormData } from '../types'
 
 const ConsultDash = () => {
   const {
@@ -19,15 +21,42 @@ const ConsultDash = () => {
   const { experiences } = useExperiencesStore()
   const { certifications } = useCertificationsStore()
 
-  const onSubmit = (data) => {
-    console.log(
-      'Datos del formulario:',
-      data,
+  const onSubmit = async (data) => {
+    const {
+      city,
+      country,
+      employmentStatus,
+      avalibleHours,
+      willingToTravel,
+      provisionForRemoteWork,
+      feeFees,
+      github,
+      linkedIn,
+      portfolio,
+    } = data
+
+    const timezone = `${city}/${country}`
+
+    const formData = {
+      location: city,
+      timezone,
+      employmentStatus,
+      avalibleHours,
+      willingToTravel,
+      provisionForRemoteWork,
+      feeFees,
+      portfolio,
+      linkedIn,
+      github,
       skills,
       languages,
       experiences,
-      certifications
-    )
+      certifications,
+    }
+    console.log(formData)
+    const datainfo = await registerInformationConsult({
+      formData,
+    })
   }
 
   return (
