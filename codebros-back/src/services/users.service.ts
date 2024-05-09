@@ -109,15 +109,15 @@ export class UsersService {
       },
     );
 
-    const experiences = data.experiences.forEach(async (experience) => {
+    const experiences = data.experiences.map(async (experience) => {
       await this.experienceService.addExperience(experience, consultant.id);
     });
 
-    const languages = data.languages.forEach(async (language) => {
+    const languages = data.languages.map(async (language) => {
       await this.languageService.addLanguage(language, consultant.id);
     });
 
-    const skills = data.skills.forEach(async (skill) => {
+    const skills = data.skills.map(async (skill) => {
       await this.skillService.addSkill(skill, consultant.id);
     });
 
@@ -235,6 +235,7 @@ export class UsersService {
         },
         experiences: {
           select: {
+            id: true,
             company: true,
             position: true,
             description: true,
@@ -254,6 +255,7 @@ export class UsersService {
         },
         skills: {
           select: {
+            id: true,
             name: true,
             type: true,
           },
