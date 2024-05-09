@@ -13,6 +13,8 @@ import { SkillsController } from './controllers/skills.controller';
 import { LanguagesController } from './controllers/languages.controller';
 import { ProjectsService } from './services/projects.service';
 import { ProjectsController } from './controllers/projects.controller';
+import { AiService } from './services/ai.service';
+import { AiController } from './controllers/ai.controller';
 
 @Module({
   imports: [SecurityModule],
@@ -23,6 +25,7 @@ import { ProjectsController } from './controllers/projects.controller';
     SkillsController,
     LanguagesController,
     ProjectsController,
+    AiController,
   ],
   providers: [
     AppService,
@@ -32,6 +35,7 @@ import { ProjectsController } from './controllers/projects.controller';
     LanguagesService,
     SkillsService,
     ProjectsService,
+    AiService,
   ],
 })
 export class AppModule {}

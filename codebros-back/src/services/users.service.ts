@@ -235,6 +235,7 @@ export class UsersService {
         },
         experiences: {
           select: {
+            id: true,
             company: true,
             position: true,
             description: true,
@@ -254,6 +255,7 @@ export class UsersService {
         },
         skills: {
           select: {
+            id: true,
             name: true,
             type: true,
           },
