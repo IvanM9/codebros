@@ -5,49 +5,58 @@ const MainInformation = ({ register, errors }) => {
     <>
       <h1>Datos principales</h1>
       <div className='grid grid-cols-2 gap-6'>
-        <div>
+        <div className='input flex flex-col w-full static'>
           <label
             htmlFor='country'
-            className='block text-sm font-medium text-gray-700'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
           >
-            Pais
+            Pais*
           </label>
           <input
             type='text'
             id='country'
+            placeholder='Ecuador'
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
             {...register('country', {
               required: 'Campo Obligatorio',
             })}
-            className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
           />
           {errors.country && <Error>{errors.country?.message}</Error>}
         </div>
-        <div>
+        <div className='input flex flex-col w-full static'>
           <label
             htmlFor='city'
-            className='block text-sm font-medium text-gray-700'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+
           >
-            Ciudad
+            Ciudad*
           </label>
           <input
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
             type='text'
             id='city'
-            {...register('city', {})}
-            className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+            placeholder='Guayaquil, Quito'
+            {...register('city', {
+              required: 'Campo Obligatorio',
+            })}
+    
           />
           {errors.city && <Error>{errors.city?.message}</Error>}
         </div>
-        <div>
+        <div className='input flex flex-col w-full static'>
           <label
             htmlFor='employmentStatus'
-            className='block text-sm font-medium text-gray-700'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+
           >
-            Tipo de contrato
+            Tipo de contrato*
           </label>
           <select
             id='employmentStatus'
-            {...register('employmentStatus', {})}
-            className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+            {...register('employmentStatus', {
+              required: 'Campo Obligatorio',
+            })}
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
           >
             <option value=''>Seleccione...</option>
             <option value='FULL_TIME'>Tiempo Completo</option>
@@ -58,78 +67,93 @@ const MainInformation = ({ register, errors }) => {
             <Error>{errors.employmentStatus?.message}</Error>
           )}
         </div>
-        <div>
+        <div className='input flex flex-col w-full static'>
           <label
             htmlFor='avalibleHours'
-            className='block text-sm font-medium text-gray-700'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+
+
           >
-            Horas Disponibles
+            Horas Disponibles*
           </label>
           <input
+          placeholder='0'
             type='number'
             min={0}
             max={24}
             id='avalibleHours'
-            {...register('avalibleHours', {})}
-            className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+            {...register('avalibleHours', {
+              required: 'Campo Obligatorio',
+            })}
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
           />
           {errors.avalibleHours && (
             <Error>{errors.avalibleHours?.message}</Error>
           )}
         </div>
-        <div>
+        <div className="input flex flex-col w-full static">
           <label
-            htmlFor='willingToTravel'
-            className='block text-sm font-medium text-gray-700'
+            htmlFor="willingToTravel"
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+
+
           >
-            ¿Dispuesto a viajar?
+            ¿Dispuesto a viajar?*
           </label>
           <select
-            id='willingToTravel'
-            {...register('willingToTravel', {})}
-            className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+            id="willingToTravel"
+            {...register("willingToTravel", {
+              required: 'Campo Obligatorio',
+            })}
+            className="border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50"
           >
-            <option value=''>Seleccione...</option>
-            <option value='true'>Sí</option>
-            <option value='false'>No</option>
+            <option value="">Seleccione...</option>
+            <option value="true">Sí</option>
+            <option value="false">No</option>
           </select>
           {errors.willingToTravel && (
             <Error>{errors.willingToTravel?.message}</Error>
           )}
         </div>
-        <div>
+        <div className="input flex flex-col w-full static">
           <label
-            htmlFor='provisionForRemoteWork'
-            className='block text-sm font-medium text-gray-700'
+            htmlFor="provisionForRemoteWork"
+            className="text-black text-sm font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit"
           >
-            ¿Disponible para trabajo remoto?
+            ¿Disponible para trabajo remoto?*
           </label>
           <select
-            id='provisionForRemoteWork'
-            {...register('provisionForRemoteWork', {})}
-            className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+            id="provisionForRemoteWork"
+            {...register("provisionForRemoteWork", {
+              required: 'Campo Obligatorio',
+            })}
+            className="border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50"
           >
-            <option value=''>Seleccione...</option>
-            <option value='true'>Sí</option>
-            <option value='false'>No</option>
+            <option value="">Seleccione...</option>
+            <option value="true">Sí</option>
+            <option value="false">No</option>
           </select>
           {errors.provisionForRemoteWork && (
             <Error>{errors.provisionForRemoteWork?.message}</Error>
           )}
         </div>
-        <div>
+        <div className='input flex flex-col w-full static'>
           <label
             htmlFor='feeFees'
-            className='block text-sm font-medium text-gray-700'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
           >
-            Tarifa por hora
+            Tarifa por hora*
           </label>
           <input
+            placeholder='0'
             type='number'
             min={0}
             id='feeFees'
-            {...register('feeFees', {})}
-            className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+            {...register('feeFees', {
+              required: 'Campo Obligatorio',
+            })}
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
+
           />
           {errors.feeFees && <Error>{errors.feeFees?.message}</Error>}
         </div>

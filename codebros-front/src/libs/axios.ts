@@ -3,7 +3,7 @@ import { useAuthStore } from "../store/auth";
 
 export const authApi = axios.create({
     baseURL: "https://codebros.onrender.com/api",
-    withCredentials: true,
+    withCredentials: false,
 });
 
 authApi.interceptors.request.use((config) => {

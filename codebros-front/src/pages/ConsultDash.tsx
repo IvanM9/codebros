@@ -8,7 +8,6 @@ import {
   useSkillsStore,
 } from '../store/consultData'
 import { registerInformationConsult } from '../api/auth'
-import { FormData } from '../types'
 
 const ConsultDash = () => {
   const {
@@ -35,28 +34,35 @@ const ConsultDash = () => {
       portfolio,
     } = data
 
-    const timezone = `${city}/${country}`
+    const timeZone = `${city}/${country}`;
 
+    // Eliminar los id de los objetos dentro de los arrays
+    const skillsWithoutId = skills.map(({ id, ...rest }) => rest);
+    const languagesWithoutId = languages.map(({ id, ...rest }) => rest);
+    const experiencesWithoutId = experiences.map(({ id, ...rest }) => rest);
+    const certificationsWithoutId = certifications.map(({ id, ...rest }) => rest);
+  
     const formData = {
       location: city,
-      timezone,
+      timeZone,
       employmentStatus,
-      avalibleHours,
-      willingToTravel,
-      provisionForRemoteWork,
+      availableHours: Number(avalibleHours),
+      willingToTravel: Boolean(willingToTravel),
+      provisionForRemoteWork: Boolean(provisionForRemoteWork),
       feeFees,
       portfolio,
       linkedIn,
       github,
-      skills,
-      languages,
-      experiences,
-      certifications,
-    }
-    console.log(formData)
-    const datainfo = await registerInformationConsult({
+      skills: skillsWithoutId,
+      languages: languagesWithoutId,
+      experiences: experiencesWithoutId,
+      certifications: certificationsWithoutId,
+    };
+    
+    const datainfo = await registerInformationConsult(
       formData,
-    })
+    )
+    console.log(typeof datainfo)
   }
 
   return (

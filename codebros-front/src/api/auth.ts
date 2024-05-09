@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { LoginUser, DraftDeveloper } from '../types'
 import { authApi } from '../libs/axios';
+import ColorChangingBackground from "../pages/Landing";
 
 
 export const loginRequest = async (data: LoginUser) => {
@@ -20,14 +21,16 @@ export const registerRequest = async (data: DraftDeveloper) => {
 
 
 export const registerInformationConsult = async (data) => {
+    console.log(data)
     try {
-        const response = await authApi.post('/users/register-information', data);
-        return response;
+      const response = await authApi.post('/users/register-information', data);
+      console.log(response);
+      return response;
     } catch (error) {
-        console.error('Error al registrar el desarrollador:', error);
-        throw error;
+      console.error('Error al registrar el desarrollador:', error);
+      throw error;
     }
-};
+  };
 export const profileRequest = async () => {
     await axios.get("https://codebros.onrender.com/api/users/consultants?isBusy=true")
 }
