@@ -39,7 +39,6 @@ model Consultant {
   id                     String            @id @default(cuid())
   user                   User              @relation(fields: [userId], references: [id])
   userId                 String            @unique @map("user_id")
-  projects               Project[]
   createdAt              DateTime          @default(now()) @map("created_at")
   updatedAt              DateTime          @updatedAt @map("updated_at")
   location               String?
@@ -138,21 +137,29 @@ model Certification {
   consultant   Consultant @relation(fields: [consultantId], references: [id])
   consultantId String     @map("consultant_id")
 
+
   @@map("certifications")
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  manager     User     @relation(fields: [managerId], references: [id])
-  managerId   String   @map("manager_id")
+  id            String    @id @default(cuid())
+  name          String
+  description   String
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  manager       User      @relation(fields: [managerId], references: [id])
+  managerId     String    @map("manager_id")
+  requiredLevel String?   @map("required_level")
+  teamSize      Int?
+  startDate     DateTime? @map("start_date") @db.Date
+  duration      String?
+  status        Boolean   @default(true)
+  remote        Boolean   @default(false)
+  budget        Decimal?
+  client        String?
 
   requiredSkills     Skill[]
   requiredLanguages  Language[]
-  consultants        Consultant[]
   projectConsultants ProjectConsultant[]
 
   @@map("projects")

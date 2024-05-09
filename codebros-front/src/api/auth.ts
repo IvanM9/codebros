@@ -16,3 +16,7 @@ export const registerRequest = async (data: DraftDeveloper) => {
         console.error('Error al registrar el desarrollador:', error);
     }
 }
+
+export const profileRequest = async () => {
+    await axios.get("https://codebros.onrender.com/api/users/consultants?isBusy=true")
+}

@@ -4,10 +4,10 @@ import { loginRequest } from '../api/auth'
 import { LoginUser } from '../types'
 import { toast } from 'react-toastify'
 import { useAuthStore } from '../store/auth'
-//import { useLocation } from 'wouter'
+import { useLocation } from 'wouter'
 
 const Login = () => {
-  //const [, navigate] = useLocation()
+  const [, navigate] = useLocation()
   const {
     register,
     handleSubmit,
@@ -18,10 +18,17 @@ const Login = () => {
 
   async function LoginUser(data: LoginUser) {
     const resLogin = await loginRequest(data)
-    console.log(resLogin)
+
     if (resLogin?.status === 201 || resLogin?.status === 200) {
+      const { token, role } = resLogin.data.data
       toast.success(resLogin?.data.message)
-      setToken(resLogin.data.data.token)
+      setToken(token, role)
+
+      if (role === 'CONSULTANT') {
+        navigate('/consultant-dashboard')
+      } else if (role === 'MANAGER') {
+        navigate('/admin-dashboard')
+      }
     } else {
       toast.error(resLogin?.data.message)
     }

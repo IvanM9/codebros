@@ -63,4 +63,49 @@ export class SkillsService {
 
     return await this.addSkill(skill, consultant.id);
   }
+
+  async addSkillToProject(skill: SkillDto, projectId: string) {
+    const skillAux = await this.db.skill.findUnique({
+      where: {
+        name: skill.name,
+      },
+    });
+
+    if (skillAux) {
+      await this.db.skill
+        .update({
+          where: {
+            name: skill.name,
+          },
+          data: {
+            projects: {
+              connect: {
+                id: projectId,
+              },
+            },
+          },
+        })
+        .catch(() => {
+          throw new BadRequestException('Error al registrar habilidades');
+        });
+    } else {
+      await this.db.skill
+        .create({
+          data: {
+            projects: {
+              connect: {
+                id: projectId,
+              },
+            },
+            name: skill.name,
+            type: skill.type,
+          },
+        })
+        .catch(() => {
+          throw new BadRequestException('Error al registrar habilidades');
+        });
+    }
+
+    return { message: 'Se ha registrado la habilidad correctamente' };
+  }
 }

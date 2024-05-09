@@ -11,6 +11,10 @@ import { SkillsService } from './services/skills.service';
 import { ExperiencesController } from './controllers/experiences.controller';
 import { SkillsController } from './controllers/skills.controller';
 import { LanguagesController } from './controllers/languages.controller';
+import { ProjectsService } from './services/projects.service';
+import { ProjectsController } from './controllers/projects.controller';
+import { AiService } from './services/ai.service';
+import { AiController } from './controllers/ai.controller';
 
 @Module({
   imports: [SecurityModule],
@@ -20,6 +24,8 @@ import { LanguagesController } from './controllers/languages.controller';
     ExperiencesController,
     SkillsController,
     LanguagesController,
+    ProjectsController,
+    AiController,
   ],
   providers: [
     AppService,
@@ -28,6 +34,8 @@ import { LanguagesController } from './controllers/languages.controller';
     ExperiencesService,
     LanguagesService,
     SkillsService,
+    ProjectsService,
+    AiService,
   ],
 })
 export class AppModule {}
