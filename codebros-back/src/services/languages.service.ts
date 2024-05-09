@@ -63,4 +63,49 @@ export class LanguagesService {
 
     return await this.addLanguage(language, consultant.id);
   }
+
+  async addLanguageToProject(language: LanguageDto, projectId: string) {
+    const existLanguage = await this.db.language.findUnique({
+      where: {
+        name: language.name,
+      },
+    });
+
+    if (existLanguage) {
+      await this.db.language
+        .update({
+          where: {
+            name: language.name,
+          },
+          data: {
+            projects: {
+              connect: {
+                id: projectId,
+              },
+            },
+          },
+        })
+        .catch(() => {
+          throw new BadRequestException('Error al registrar idiomas');
+        });
+    } else {
+      await this.db.language
+        .create({
+          data: {
+            projects: {
+              connect: {
+                id: projectId,
+              },
+            },
+            name: language.name,
+            level: language.level,
+          },
+        })
+        .catch(() => {
+          throw new BadRequestException('Error al registrar idiomas');
+        });
+
+      return { message: 'Se ha registrado el idioma correctamente' };
+    }
+  }
 }
