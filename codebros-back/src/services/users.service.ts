@@ -66,62 +66,76 @@ export class UsersService {
         throw new NotFoundException('Usuario no encontrado');
       });
 
-    const consultant = await this.db.consultant
-      .create({
-        data: {
-          userId,
-          location: data.location,
-          timeZone: data.timeZone,
-          employmentStatus: data.employmentStatus,
-          availableHours: data.availableHours,
-          willingToTravel: data.willingToTravel,
-          provisionForRemoteWork: data.provisionForRemoteWork,
-          feeFees: data.feeFees,
-          portfolio: data.portfolio,
-          linkedIn: data.linkedIn,
-          github: data.github,
+    const exist = await this.db.consultant.findFirst({
+      where: {
+        userId: userId,
+      },
+    });
+
+    if (exist) {
+      throw new BadRequestException('Información del usuario ya registrada');
+    }
+
+    this.db.$transaction(async (db) => {
+      const consultant = await db.consultant
+        .create({
+          data: {
+            userId,
+            location: data.location,
+            timeZone: data.timeZone,
+            employmentStatus: data.employmentStatus,
+            availableHours: data.availableHours,
+            willingToTravel: data.willingToTravel,
+            provisionForRemoteWork: data.provisionForRemoteWork,
+            feeFees: data.feeFees,
+            portfolio: data.portfolio,
+            linkedIn: data.linkedIn,
+            github: data.github,
+          },
+          select: {
+            id: true,
+          },
+        })
+        .catch(() => {
+          throw new BadRequestException('Información ya registrada');
+        });
+
+      const certifications = data.certifications.forEach(
+        async (certification) => {
+          await db.certification
+            .create({
+              data: {
+                consultantId: consultant.id,
+                name: certification.name,
+                authority: certification.authority,
+                license: certification.license,
+                startDate: certification.startDate,
+                endDate: certification.endDate,
+                url: certification.url,
+              },
+            })
+            .catch(() => {
+              throw new BadRequestException(
+                'Error al registrar certificaciones',
+              );
+            });
         },
-        select: {
-          id: true,
-        },
-      })
-      .catch(() => {
-        throw new BadRequestException('Información ya registrada');
+      );
+
+      const experiences = data.experiences.map(async (experience) => {
+        await this.experienceService.addExperience(experience, consultant.id);
       });
 
-    const certifications = data.certifications.forEach(
-      async (certification) => {
-        await this.db.certification
-          .create({
-            data: {
-              consultantId: consultant.id,
-              name: certification.name,
-              authority: certification.authority,
-              license: certification.license,
-              startDate: certification.startDate,
-              endDate: certification.endDate,
-              url: certification.url,
-            },
-          })
-          .catch(() => {
-            throw new BadRequestException('Error al registrar certificaciones');
-          });
-      },
-    );
+      const languages = data.languages.map(async (language) => {
+        await this.languageService.addLanguage(language, consultant.id);
+      });
 
-    const experiences = data.experiences.map(async (experience) => {
-      await this.experienceService.addExperience(experience, consultant.id);
+      const skills = data.skills.map(async (skill) => {
+        await this.skillService.addSkill(skill, consultant.id);
+      });
+
+      await Promise.all([certifications, experiences, languages, skills]);
     });
-
-    const languages = data.languages.map(async (language) => {
-      await this.languageService.addLanguage(language, consultant.id);
-    });
-
-    const skills = data.skills.map(async (skill) => {
-      await this.skillService.addSkill(skill, consultant.id);
-    });
-
-    await Promise.all([certifications, experiences, languages, skills]);
 
     return { message: 'Se ha completado la información correctamente' };
   }
@@ -203,6 +217,7 @@ export class UsersService {
         isBusy: isBusy,
       },
       select: {
+        id: true,
         location: true,
         timeZone: true,
         employmentStatus: true,

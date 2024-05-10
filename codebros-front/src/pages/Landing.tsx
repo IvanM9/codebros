@@ -31,9 +31,9 @@ const ColorChangingBackground: React.FC = () => {
         <img src={logoImage} alt="Logo" className="h-12" />
       </div>
       <Link href="/login">
-        <div className="fixed top-0 right-0 m-4 flex items-center">
-          <p className="text-black mr-4">Te invitamos a registrarte</p>
-          <button className="bg-black text-white px-4 py-2 shadow-grey-500/40 rounded-md hover:bg-gray-200" type='button'>
+        <div className="fixed top-0 right-0 m-4 flex inherits items-center">
+          <p className="text-black mr-4"></p>
+          <button className=" text-black px-4 py-2 shadow-grey-500/40 italic rounded-md hover:bg-gray-90" type='button'>
             login
           </button>
         </div>
@@ -46,14 +46,16 @@ const ColorChangingBackground: React.FC = () => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
-        <div className="ml-8 text-center">
-          <h1 className="text-black text-4xl font-bold mb-4">HAZ QUE LOS MEJORES </h1>
-          <h1 className="text-black text-4xl font-bold mb-4">RECLUTADORES TE ENCUENTRE  </h1>
-
+        <div className="ml-8 text-left">
+          <div className="flex flex-col items-start">
+            <h1 className="text-black Bauhaus 93 Bauhaus 93 text-4xl font-bold mb-2">HAZ QUE LOS</h1>
+            <h1 className="text-black text-4xl font-bold mb-2">MEJORES RECLUTADORES</h1>
+            <h1 className="text-black text-4xl font-bold mb-4">TE ENCUENTRE</h1>
+          </div>
           <p className="text-black text-lg">pipipipipipipipi</p>
           <Link href="/register">
-            <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-200 mt-4">
-              registrarme 
+            <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 mt-4">
+              registrate
             </button>
           </Link>
         </div>

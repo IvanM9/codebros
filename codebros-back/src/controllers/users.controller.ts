@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -52,7 +60,12 @@ export class UsersController {
   @Get('consultant')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Role(RoleEnum.MANAGER, RoleEnum.CONSULTANT)
-  @ApiQuery({ name: 'id', required: false })
+  @ApiQuery({
+    name: 'id',
+    required: false,
+    description:
+      'Si el usuario es administrador, debe enviar el id del consultor',
+  })
   @ApiOperation({
     summary: 'Obtener consultor por id o por consultor loggeado',
   })
@@ -60,6 +73,10 @@ export class UsersController {
     @CurrentUser() currentUser: InfoUserInterface,
     @Query('id') id?: string,
   ) {
+    if (!id && currentUser.role !== RoleEnum.CONSULTANT) {
+      throw new BadRequestException('El id es requerido');
+    }
+
     return this.service.getConsultant(
       currentUser.role === RoleEnum.CONSULTANT ? currentUser.id : id,
     );

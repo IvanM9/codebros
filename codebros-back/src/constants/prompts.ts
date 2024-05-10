@@ -1,5 +1,5 @@
 export function generatePromtMatching(project: any, consultants: any[]) {
-  return `A continuación te pasaré un JSON con los datos del proyecto y también un array con los datos de los consultores. Deberás hacer un matching entre los consultores y el proyecto, y devolver un array con los 10 consultores más apropiados para el proyecto. Cada consultor deberá tener un id, una puntuación de idoneidad, sus habilidades y experiencia clave relevantes, y cualquier otra información importante que respalde tu recomendación.
+  return `A continuación te pasaré un JSON con los datos del proyecto y también un array con los datos de los consultores. Deberás hacer un matching entre los consultores y el proyecto, y devolver un array con los 10 consultores más apropiados para el proyecto. 
   Detalles del Proyecto:
   ${JSON.stringify(project)}
   
