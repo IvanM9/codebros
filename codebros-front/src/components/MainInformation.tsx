@@ -3,8 +3,10 @@ import { Error } from '../components/Error'
 const MainInformation = ({ register, errors }) => {
   return (
     <>
-      <h1>Datos principales</h1>
-      <div className='grid grid-cols-2 gap-6'>
+      <p className='text-center text-2xl font-bold py-4 uppercase'>
+        Datos principales
+      </p>
+      <div className='grid grid-cols-2 gap-6 mb-10'>
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='country'
@@ -27,7 +29,6 @@ const MainInformation = ({ register, errors }) => {
           <label
             htmlFor='city'
             className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
           >
             Ciudad*
           </label>
@@ -39,7 +40,6 @@ const MainInformation = ({ register, errors }) => {
             {...register('city', {
               required: 'Campo Obligatorio',
             })}
-    
           />
           {errors.city && <Error>{errors.city?.message}</Error>}
         </div>
@@ -47,7 +47,6 @@ const MainInformation = ({ register, errors }) => {
           <label
             htmlFor='employmentStatus'
             className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
           >
             Tipo de contrato*
           </label>
@@ -71,13 +70,11 @@ const MainInformation = ({ register, errors }) => {
           <label
             htmlFor='avalibleHours'
             className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
-
           >
             Horas Disponibles*
           </label>
           <input
-          placeholder='0'
+            placeholder='0'
             type='number'
             min={0}
             max={24}
@@ -91,47 +88,45 @@ const MainInformation = ({ register, errors }) => {
             <Error>{errors.avalibleHours?.message}</Error>
           )}
         </div>
-        <div className="input flex flex-col w-full static">
+        <div className='input flex flex-col w-full static'>
           <label
-            htmlFor="willingToTravel"
+            htmlFor='willingToTravel'
             className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
-
           >
             ¿Dispuesto a viajar?*
           </label>
           <select
-            id="willingToTravel"
-            {...register("willingToTravel", {
+            id='willingToTravel'
+            {...register('willingToTravel', {
               required: 'Campo Obligatorio',
             })}
-            className="border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50"
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
           >
-            <option value="">Seleccione...</option>
-            <option value="true">Sí</option>
-            <option value="false">No</option>
+            <option value=''>Seleccione...</option>
+            <option value='true'>Sí</option>
+            <option value='false'>No</option>
           </select>
           {errors.willingToTravel && (
             <Error>{errors.willingToTravel?.message}</Error>
           )}
         </div>
-        <div className="input flex flex-col w-full static">
+        <div className='input flex flex-col w-full static'>
           <label
-            htmlFor="provisionForRemoteWork"
-            className="text-black text-sm font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit"
+            htmlFor='provisionForRemoteWork'
+            className='text-black text-sm font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
           >
             ¿Disponible para trabajo remoto?*
           </label>
           <select
-            id="provisionForRemoteWork"
-            {...register("provisionForRemoteWork", {
+            id='provisionForRemoteWork'
+            {...register('provisionForRemoteWork', {
               required: 'Campo Obligatorio',
             })}
-            className="border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50"
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
           >
-            <option value="">Seleccione...</option>
-            <option value="true">Sí</option>
-            <option value="false">No</option>
+            <option value=''>Seleccione...</option>
+            <option value='true'>Sí</option>
+            <option value='false'>No</option>
           </select>
           {errors.provisionForRemoteWork && (
             <Error>{errors.provisionForRemoteWork?.message}</Error>
@@ -153,7 +148,6 @@ const MainInformation = ({ register, errors }) => {
               required: 'Campo Obligatorio',
             })}
             className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
           />
           {errors.feeFees && <Error>{errors.feeFees?.message}</Error>}
         </div>

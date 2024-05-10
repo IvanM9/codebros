@@ -5,7 +5,7 @@ import {
   useSkillsStore,
 } from '../store/consultData'
 import { Error } from './Error'
-import {Trash} from './Icons'
+import { Trash } from './Icons'
 
 const AdditionalInformation = ({ register, errors }) => {
   const { skills, addSkill, updateSkill, removeSkill } = useSkillsStore()
@@ -26,14 +26,16 @@ const AdditionalInformation = ({ register, errors }) => {
 
   return (
     <>
-      <p className='mt-20'>Informacion adicional</p>
-      <section className="flex flex-col gap-3">
+      <p className='text-center text-2xl font-bold mt-20 mb-5 uppercase'>
+        Informacion adicional
+      </p>
+      <section className='flex flex-col gap-3'>
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='portfolio'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
-            Portfolio
+            Portafolio
           </label>
           <input
             type='url'
@@ -46,18 +48,16 @@ const AdditionalInformation = ({ register, errors }) => {
               },
             })}
             className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
           />
           {errors.portfolio && (
             <Error>{errors.portfolio?.message?.toString()}</Error>
           )}
         </div>
-        
+
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='linkedIn'
             className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
           >
             Linkedin*
           </label>
@@ -67,7 +67,7 @@ const AdditionalInformation = ({ register, errors }) => {
             placeholder='https://linkedin.com'
             className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
             {...register('linkedIn', {
-              required: "El campo Linkedin es obligatorio",
+              required: 'El campo Linkedin es obligatorio',
               pattern: {
                 value: /^(ftp|http|https):\/\/[^ "]+$/,
                 message: 'Por favor ingrese un enlace válido',
@@ -81,7 +81,6 @@ const AdditionalInformation = ({ register, errors }) => {
           <label
             htmlFor='github'
             className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
           >
             GitHub*
           </label>
@@ -90,9 +89,8 @@ const AdditionalInformation = ({ register, errors }) => {
             id='github'
             placeholder='https://github.com'
             className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
             {...register('github', {
-              required: "El campo GitHub es obligatorio",
+              required: 'El campo GitHub es obligatorio',
               pattern: {
                 value: /^(ftp|http|https):\/\/[^ "]+$/,
                 message: 'Por favor ingrese un enlace válido',
@@ -103,16 +101,22 @@ const AdditionalInformation = ({ register, errors }) => {
         </div>
       </section>
 
-      <p>SKILLS</p>
-      <section className='mt-10'>
+      {/*SKILLS */}
+      <section className=''>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tus skills
+        </p>
         {skills.map((skill) => (
-          <div key={skill.id} className='flex justify-center items-center gap-4 mb-6'>
-            <div className="w-full justify-center items-center">
+          <div
+            key={skill.id}
+            className='flex justify-center items-center gap-4 mt-6'
+          >
+            <div className='w-full justify-center items-center'>
               <label
-              htmlFor={`name_${skill.id}`}
-              className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-white w-fit'
+                htmlFor={`name_${skill.id}`}
+                className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-white w-fit'
               >
-              Skill
+                Skill
               </label>
               <input
                 type='text'
@@ -134,17 +138,13 @@ const AdditionalInformation = ({ register, errors }) => {
               value={skill.type}
               onChange={(e) => updateSkill(skill.id, 'type', e.target.value)}
               className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
             >
               <option value=''>Seleccione...</option>
               <option value='SOFT'>soft</option>
               <option value='HARD'>hard</option>
             </select>
-            <button
-              type='button'
-              onClick={() => removeSkill(skill.id)}
-            >
-              <Trash/>
+            <button type='button' onClick={() => removeSkill(skill.id)}>
+              <Trash />
             </button>
           </div>
         ))}
@@ -153,23 +153,33 @@ const AdditionalInformation = ({ register, errors }) => {
         <button
           type='button'
           onClick={addSkill}
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            skills.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
         >
           Agregar Skill
         </button>
       </section>
 
       {/* Languages */}
-      <section className='mt-10'>
+      <section className=''>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tus Idiomas
+        </p>
         {languages.map((language) => (
-          <div key={language.id} className='flex justify-center items-center gap-4 mb-6'>
-            <div className="w-full justify-center items-center">
+          <div
+            key={language.id}
+            className='flex justify-center items-center gap-4 mt-6'
+          >
+            <div className='w-full justify-center items-center'>
               <label
-              htmlFor={`name_${language.id}`}
-              className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-white w-fit'
+                htmlFor={`name_${language.id}`}
+                className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-white w-fit'
               >
-              Idioma
-              </label>     
+                Idioma
+              </label>
               <input
                 id={`name_${language.id}`}
                 type='text'
@@ -190,18 +200,14 @@ const AdditionalInformation = ({ register, errors }) => {
                 handleLanguageChange(language.id, 'level', e.target.value)
               }
               className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
             >
               <option value=''>Seleccione Nivel</option>
               <option value='BASIC'>Básico</option>
               <option value='MEDIUM'>Intermedio</option>
               <option value='HIGH'>Avanzado</option>
             </select>
-            <button
-              type='button'
-              onClick={() => removeLanguage(language.id)}
-            >
-              <Trash/>
+            <button type='button' onClick={() => removeLanguage(language.id)}>
+              <Trash />
             </button>
           </div>
         ))}
@@ -209,7 +215,11 @@ const AdditionalInformation = ({ register, errors }) => {
         <button
           type='button'
           onClick={addLanguage}
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            languages.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
         >
           Agregar Idioma
         </button>
@@ -217,9 +227,11 @@ const AdditionalInformation = ({ register, errors }) => {
 
       {/* Experiences */}
       <section>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tu Experiencia
+        </p>
         {experiences.map((experience) => (
           <div key={experience.id} className='grid grid-cols-2 gap-6'>
-
             <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`title-${experience.id}`}
@@ -259,7 +271,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese la empresa'
               />
             </div>
@@ -269,7 +280,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`position-${experience.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Posición:
               </label>
@@ -285,7 +295,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese la posición'
               />
             </div>
@@ -295,7 +304,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`location-${experience.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Ubicación:
               </label>
@@ -310,7 +318,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese la ubicación'
               />
             </div>
@@ -320,7 +327,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`startDate-${experience.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Fecha de inicio:
               </label>
@@ -335,7 +341,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
               />
             </div>
 
@@ -344,7 +349,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`endDate-${experience.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Fecha de fin:
               </label>
@@ -359,7 +363,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
               />
             </div>
 
@@ -368,7 +371,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`description-${experience.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Descripción:
               </label>
@@ -382,7 +384,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese una descripción'
               ></textarea>
             </div>
@@ -392,7 +393,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`industry-${experience.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Industria:
               </label>
@@ -407,7 +407,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese la industria'
               />
             </div>
@@ -416,13 +415,17 @@ const AdditionalInformation = ({ register, errors }) => {
               type='button'
               onClick={() => removeExperience(experience.id)}
             >
-              <Trash/>
+              <Trash />
             </button>
           </div>
         ))}
         <button
           type='button'
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            experiences.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           onClick={addExperience}
         >
           Agregar Experiencia
@@ -431,11 +434,12 @@ const AdditionalInformation = ({ register, errors }) => {
 
       {/* Certifications */}
       <section>
-        <p className='mt-20'>CERTIFICACIONES</p>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tus Certificaciones
+        </p>
 
         {certifications.map((cerification) => (
           <div key={cerification.id} className='grid grid-cols-2 gap-6'>
-
             <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`name-${cerification.id}`}
@@ -462,8 +466,7 @@ const AdditionalInformation = ({ register, errors }) => {
             <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`authority-${cerification.id}`}
-                                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Autoridad:
               </label>
@@ -478,7 +481,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese la autoridad de la certificación'
               />
             </div>
@@ -487,7 +489,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`license-${cerification.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Licencia:
               </label>
@@ -502,7 +503,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese la licencia de la certificación'
               />
             </div>
@@ -512,7 +512,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`startDate-${cerification.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Fecha de inicio:
               </label>
@@ -527,7 +526,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
               />
             </div>
 
@@ -536,7 +534,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`endDate-${cerification.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 Fecha de fin:
               </label>
@@ -551,7 +548,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
               />
             </div>
 
@@ -559,7 +555,6 @@ const AdditionalInformation = ({ register, errors }) => {
               <label
                 htmlFor={`url-${cerification.id}`}
                 className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
-
               >
                 URL:
               </label>
@@ -580,7 +575,6 @@ const AdditionalInformation = ({ register, errors }) => {
                   )
                 }
                 className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
-
                 placeholder='Ingrese la URL de la certificación'
               />
             </div>
@@ -589,13 +583,17 @@ const AdditionalInformation = ({ register, errors }) => {
               type='button'
               onClick={() => removeCertification(cerification.id)}
             >
-              <Trash/>
+              <Trash />
             </button>
           </div>
         ))}
         <button
           type='button'
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            certifications.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           onClick={addCertification}
         >
           Agregar Certificacion
