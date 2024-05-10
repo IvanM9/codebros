@@ -1,15 +1,20 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ENVIRONMENT } from 'src/constants/environment';
 import { generatePromtMatching } from 'src/constants/prompts';
 import { PrismaService } from 'src/prisma.service';
 import { UsersService } from './users.service';
-
+// import { GoogleGenerativeAI } from '@google/generative-ai';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 @Injectable()
 export class AiService {
   genAI = new GoogleGenerativeAI(ENVIRONMENT.API_KEY_AI);
   model = this.genAI.getGenerativeModel({
-    model: 'gemini-pro',
+    model: 'gemini-1.5-pro-latest',
   });
 
   constructor(
@@ -53,11 +58,23 @@ export class AiService {
 
     const consultants = (await this.userService.getConsultants(false)).data;
 
-    const prompt = generatePromtMatching(project, consultants);
-    // const result = await this.model.generateContent(prompt);
-    // const response = result.response;
-    // return response.text();
+    try {
+      const prompt = generatePromtMatching(project, consultants);
+      console.log('prompt: ', prompt);
+      const result = await this.model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: 'application/json',
+        },
+      });
+      const response = result.response;
 
-    return { data: prompt };
+      return response.text();
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('Error al generar el contenido');
+    }
+
+    // return { data: prompt };
   }
 }

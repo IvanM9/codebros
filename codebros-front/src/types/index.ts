@@ -19,7 +19,7 @@ export type PersonalInfo = {
 
 export type Skill = {
     name: string;
-    type: 'basic' | 'medium' | 'high';
+    type: 'SOFT' | "HARD";
 };
 
 export type Language = {
@@ -67,5 +67,17 @@ export type ProfileData = {
     additionalInfo: AdditionalInfo;
 };
 
+export interface FormData {
+    location: string;
+    timezone: string;
+    employmentStatus: string;
+    avalibleHours: number;
+    willingToTravel: boolean;
+    provisionForRemoteWork: boolean;
+    feeFees: number;
+    portfolio: string;
+    linkedIn: string;
+    github: string;
+}
 
 export type DraftDeveloper = Omit<Developer, 'id'> 

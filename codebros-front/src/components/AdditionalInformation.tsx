@@ -148,7 +148,7 @@ const AdditionalInformation = ({ register, errors }) => {
               placeholder='Ingrese un idioma'
               value={language.value}
               onChange={(e) =>
-                handleLanguageChange(language.id, 'value', e.target.value)
+                handleLanguageChange(language.id, 'name', e.target.value)
               }
               className='mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
             />
