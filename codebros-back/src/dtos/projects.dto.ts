@@ -4,6 +4,7 @@ import { SkillDto } from './skills.dto';
 import {
   IsArray,
   IsBoolean,
+  IsDecimal,
   IsNumber,
   IsOptional,
   IsString,
@@ -43,7 +44,7 @@ export class CreateProjectDto {
   remote: boolean;
 
   @ApiProperty()
-  @IsString()
+  @IsDecimal({ decimal_digits: '2' })
   @IsOptional()
   budget?: string;
 

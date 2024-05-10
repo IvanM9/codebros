@@ -1,8 +1,8 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   UseGuards,
@@ -57,28 +57,26 @@ export class UsersController {
     return this.service.getConsultants(isBusy);
   }
 
-  @Get('consultant')
+  @Get('consultant/:consultantId')
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Role(RoleEnum.MANAGER, RoleEnum.CONSULTANT)
-  @ApiQuery({
-    name: 'id',
-    required: false,
-    description:
-      'Si el usuario es administrador, debe enviar el id del consultor',
-  })
+  @Role(RoleEnum.MANAGER)
   @ApiOperation({
-    summary: 'Obtener consultor por id o por consultor loggeado',
+    summary: 'Obtener consultor por id',
   })
   async getConsultantById(
     @CurrentUser() currentUser: InfoUserInterface,
-    @Query('id') id?: string,
+    @Param('consultantId') id?: string,
   ) {
-    if (!id && currentUser.role !== RoleEnum.CONSULTANT) {
-      throw new BadRequestException('El id es requerido');
-    }
+    return this.service.getConsultantById(id);
+  }
 
-    return this.service.getConsultant(
-      currentUser.role === RoleEnum.CONSULTANT ? currentUser.id : id,
-    );
+  @Get('consultant')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Role(RoleEnum.CONSULTANT)
+  @ApiOperation({
+    summary: 'Obtener información del consultor logueado',
+  })
+  async getConsultantLoggedIn(@CurrentUser() { id }: InfoUserInterface) {
+    return this.service.getConsultantLoggedIn(id);
   }
 }
