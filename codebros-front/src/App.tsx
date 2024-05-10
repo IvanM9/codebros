@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import ConsultDash from './pages/ConsultDash'
 import AdminDash from './pages/AdminDash'
 import ProtectedRoute from './components/ProtectedRoute'
+import PostDash from './pages/PostDash'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <ProtectedRoute>
           <Route path='/consultant-dashboard' component={ConsultDash} />
           <Route path='/admin-dashboard' component={AdminDash} />
+          <Route path='/post-dash' component={PostDash} />
         </ProtectedRoute>
       </Switch>
       <ToastContainer />

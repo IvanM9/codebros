@@ -5,6 +5,7 @@ import {
   useSkillsStore,
 } from '../store/consultData'
 import { Error } from './Error'
+import { Trash } from './Icons'
 
 const AdditionalInformation = ({ register, errors }) => {
   const { skills, addSkill, updateSkill, removeSkill } = useSkillsStore()
@@ -25,86 +26,110 @@ const AdditionalInformation = ({ register, errors }) => {
 
   return (
     <>
-      <div className='mb-4'>
-        <label
-          htmlFor='portfolio'
-          className='block text-sm font-medium text-gray-700'
-        >
-          Portfolio
-        </label>
-        <input
-          type='url'
-          id='portfolio'
-          placeholder='https://portfolio.com'
-          {...register('portfolio', {
-            pattern: {
-              value: /^(ftp|http|https):\/\/[^ "]+$/,
-              message: 'Por favor ingrese un enlace válido',
-            },
-          })}
-          className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-        />
-        {errors.portfolio && (
-          <Error>{errors.portfolio?.message?.toString()}</Error>
-        )}
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='linkedIn'
-          className='block text-sm font-medium text-gray-700'
-        >
-          Linkedin
-        </label>
-        <input
-          type='url'
-          id='linkedIn'
-          placeholder='https://linkedin.com'
-          className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-          {...register('linkedIn', {
-            pattern: {
-              value: /^(ftp|http|https):\/\/[^ "]+$/,
-              message: 'Por favor ingrese un enlace válido',
-            },
-          })}
-        />
-      </div>
+      <p className='text-center text-2xl font-bold mt-20 mb-5 uppercase'>
+        Informacion adicional
+      </p>
+      <section className='flex flex-col gap-3'>
+        <div className='input flex flex-col w-full static'>
+          <label
+            htmlFor='portfolio'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
+          >
+            Portafolio
+          </label>
+          <input
+            type='url'
+            id='portfolio'
+            placeholder='https://portfolio.com'
+            {...register('portfolio', {
+              pattern: {
+                value: /^(ftp|http|https):\/\/[^ "]+$/,
+                message: 'Por favor ingrese un enlace válido',
+              },
+            })}
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
+          />
+          {errors.portfolio && (
+            <Error>{errors.portfolio?.message?.toString()}</Error>
+          )}
+        </div>
 
-      <div className='mb-4'>
-        <label
-          htmlFor='github'
-          className='block text-sm font-medium text-gray-700'
-        >
-          GitHub
-        </label>
-        <input
-          type='url'
-          id='github'
-          placeholder='https://github.com'
-          className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-          {...register('github', {
-            pattern: {
-              value: /^(ftp|http|https):\/\/[^ "]+$/,
-              message: 'Por favor ingrese un enlace válido',
-            },
-          })}
-        />
-      </div>
+        <div className='input flex flex-col w-full static'>
+          <label
+            htmlFor='linkedIn'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+          >
+            Linkedin*
+          </label>
+          <input
+            type='url'
+            id='linkedIn'
+            placeholder='https://linkedin.com'
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
+            {...register('linkedIn', {
+              required: 'El campo Linkedin es obligatorio',
+              pattern: {
+                value: /^(ftp|http|https):\/\/[^ "]+$/,
+                message: 'Por favor ingrese un enlace válido',
+              },
+            })}
+          />
+          {errors.linkedIn && <Error>{errors.linkedIn?.message}</Error>}
+        </div>
 
-      <p>SKILLS</p>
-      <div className='mt-10'>
+        <div className='input flex flex-col w-full static'>
+          <label
+            htmlFor='github'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+          >
+            GitHub*
+          </label>
+          <input
+            type='url'
+            id='github'
+            placeholder='https://github.com'
+            className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
+            {...register('github', {
+              required: 'El campo GitHub es obligatorio',
+              pattern: {
+                value: /^(ftp|http|https):\/\/[^ "]+$/,
+                message: 'Por favor ingrese un enlace válido',
+              },
+            })}
+          />
+          {errors.github && <Error>{errors.github?.message}</Error>}
+        </div>
+      </section>
+
+      {/*SKILLS */}
+      <section className=''>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tus skills
+        </p>
         {skills.map((skill) => (
-          <div key={skill.id} className='flex gap-4'>
-            <input
-              type='text'
-              id={`name_${skill.id}`}
-              placeholder='Ingrese su habilidad'
-              value={skill.name}
-              {...register(`name_${skill.id}`, {
-                required: 'Campo Obligatorio',
-              })}
-              onChange={(e) => updateSkill(skill.id, 'name', e.target.value)}
-              className='mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-            />
+          <div
+            key={skill.id}
+            className='flex justify-center items-center gap-4 mt-6'
+          >
+            <div className='w-full justify-center items-center'>
+              <label
+                htmlFor={`name_${skill.id}`}
+                className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-white w-fit'
+              >
+                Skill
+              </label>
+              <input
+                type='text'
+                id={`name_${skill.id}`}
+                placeholder='Ingrese su habilidad'
+                value={skill.name}
+                {...register(`name_${skill.id}`, {
+                  required: 'Campo Obligatorio',
+                })}
+                onChange={(e) => updateSkill(skill.id, 'name', e.target.value)}
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
+              />
+            </div>
             <select
               id={`type_${skill.id}`}
               {...register(`type_${skill.id}`, {
@@ -112,18 +137,14 @@ const AdditionalInformation = ({ register, errors }) => {
               })}
               value={skill.type}
               onChange={(e) => updateSkill(skill.id, 'type', e.target.value)}
-              className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
             >
               <option value=''>Seleccione...</option>
               <option value='SOFT'>soft</option>
               <option value='HARD'>hard</option>
             </select>
-            <button
-              type='button'
-              onClick={() => removeSkill(skill.id)}
-              className='mt-1 ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
-            >
-              Eliminar
+            <button type='button' onClick={() => removeSkill(skill.id)}>
+              <Trash />
             </button>
           </div>
         ))}
@@ -132,26 +153,44 @@ const AdditionalInformation = ({ register, errors }) => {
         <button
           type='button'
           onClick={addSkill}
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            skills.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
         >
           Agregar Skill
         </button>
-      </div>
+      </section>
 
       {/* Languages */}
-      <div className='mt-10'>
+      <section className=''>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tus Idiomas
+        </p>
         {languages.map((language) => (
-          <div key={language.id} className='flex gap-4'>
-            <input
-              id='name'
-              type='text'
-              placeholder='Ingrese un idioma'
-              value={language.value}
-              onChange={(e) =>
-                handleLanguageChange(language.id, 'value', e.target.value)
-              }
-              className='mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-            />
+          <div
+            key={language.id}
+            className='flex justify-center items-center gap-4 mt-6'
+          >
+            <div className='w-full justify-center items-center'>
+              <label
+                htmlFor={`name_${language.id}`}
+                className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-white w-fit'
+              >
+                Idioma
+              </label>
+              <input
+                id={`name_${language.id}`}
+                type='text'
+                placeholder='Ingrese un idioma'
+                value={language.value}
+                onChange={(e) =>
+                  handleLanguageChange(language.id, 'name', e.target.value)
+                }
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
+              />
+            </div>
             <select
               {...register(`skills.${language.id}.level`, {
                 required: 'Campo Obligatorio',
@@ -160,19 +199,15 @@ const AdditionalInformation = ({ register, errors }) => {
               onChange={(e) =>
                 handleLanguageChange(language.id, 'level', e.target.value)
               }
-              className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
             >
               <option value=''>Seleccione Nivel</option>
               <option value='BASIC'>Básico</option>
               <option value='MEDIUM'>Intermedio</option>
               <option value='HIGH'>Avanzado</option>
             </select>
-            <button
-              type='button'
-              onClick={() => removeLanguage(language.id)}
-              className='mt-1 ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
-            >
-              Eliminar
+            <button type='button' onClick={() => removeLanguage(language.id)}>
+              <Trash />
             </button>
           </div>
         ))}
@@ -180,22 +215,29 @@ const AdditionalInformation = ({ register, errors }) => {
         <button
           type='button'
           onClick={addLanguage}
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            languages.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
         >
           Agregar Idioma
         </button>
-      </div>
+      </section>
 
       {/* Experiences */}
-      <div>
+      <section>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tu Experiencia
+        </p>
         {experiences.map((experience) => (
-          <div key={experience.id}>
-            <div className='mb-4'>
+          <div key={experience.id} className='grid grid-cols-2 gap-6'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`title-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
-                Título:
+                Título*:
               </label>
               <input
                 type='text'
@@ -204,16 +246,16 @@ const AdditionalInformation = ({ register, errors }) => {
                 onChange={(e) =>
                   handleExperienceChange(experience.id, 'title', e.target.value)
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese el título'
               />
             </div>
 
             {/* Empresa */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`company-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Empresa:
               </label>
@@ -228,16 +270,16 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese la empresa'
               />
             </div>
 
             {/* Posición */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`position-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Posición:
               </label>
@@ -252,16 +294,16 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese la posición'
               />
             </div>
 
             {/* Ubicación */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`location-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Ubicación:
               </label>
@@ -275,16 +317,16 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese la ubicación'
               />
             </div>
 
             {/* Fecha de inicio */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`startDate-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Fecha de inicio:
               </label>
@@ -298,15 +340,15 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
               />
             </div>
 
             {/* Fecha de fin */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`endDate-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Fecha de fin:
               </label>
@@ -320,15 +362,15 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
               />
             </div>
 
             {/* Descripción */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`description-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Descripción:
               </label>
@@ -341,16 +383,16 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese una descripción'
               ></textarea>
             </div>
 
             {/* Industria */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`industry-${experience.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Industria:
               </label>
@@ -364,7 +406,7 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese la industria'
               />
             </div>
@@ -372,37 +414,43 @@ const AdditionalInformation = ({ register, errors }) => {
             <button
               type='button'
               onClick={() => removeExperience(experience.id)}
-              className='mt-1 ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
             >
-              Eliminar
+              <Trash />
             </button>
           </div>
         ))}
         <button
           type='button'
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            experiences.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           onClick={addExperience}
         >
           Agregar Experiencia
         </button>
-      </div>
+      </section>
 
       {/* Certifications */}
-      <div>
-        <p className='mt-20'>CERTIFICACIONES</p>
+      <section>
+        <p className='text-center text-xl font-bold mt-8 mb-3 uppercase'>
+          Agrega tus Certificaciones
+        </p>
 
         {certifications.map((cerification) => (
-          <div key={cerification.id}>
-            <div className='mb-4'>
+          <div key={cerification.id} className='grid grid-cols-2 gap-6'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`name-${cerification.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
-                Nombre de la certificación:
+                Título*:
               </label>
               <input
                 type='text'
                 id={`name-${cerification.id}`}
+                value={cerification.name}
                 onChange={(e) =>
                   handleCertificationChange(
                     cerification.id,
@@ -410,15 +458,15 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-                placeholder='Ingrese el nombre de la certificación'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
+                placeholder='Ingrese el título'
               />
             </div>
 
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`authority-${cerification.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Autoridad:
               </label>
@@ -432,15 +480,15 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese la autoridad de la certificación'
               />
             </div>
 
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`license-${cerification.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Licencia:
               </label>
@@ -454,16 +502,16 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese la licencia de la certificación'
               />
             </div>
 
             {/* Fecha de inicio */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`startDate-${cerification.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Fecha de inicio:
               </label>
@@ -477,15 +525,15 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
               />
             </div>
 
             {/* Fecha de fin */}
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`endDate-${cerification.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 Fecha de fin:
               </label>
@@ -499,14 +547,14 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
               />
             </div>
 
-            <div className='mb-4'>
+            <div className='input flex flex-col w-full static'>
               <label
                 htmlFor={`url-${cerification.id}`}
-                className='block text-sm font-medium text-gray-700'
+                className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
               >
                 URL:
               </label>
@@ -526,27 +574,31 @@ const AdditionalInformation = ({ register, errors }) => {
                     e.target.value
                   )
                 }
-                className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+                className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
                 placeholder='Ingrese la URL de la certificación'
               />
             </div>
+
             <button
               type='button'
               onClick={() => removeCertification(cerification.id)}
-              className='mt-1 ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
             >
-              Eliminar
+              <Trash />
             </button>
           </div>
         ))}
         <button
           type='button'
-          className='mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+          className={`${
+            certifications.length > 0
+              ? 'inline-flex transition-all duration-500 transform translate-x-1'
+              : 'mx-auto block transition-all duration-500 transform translate-x-0'
+          } mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-[#7957FF] hover:bg-[#6043d3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           onClick={addCertification}
         >
           Agregar Certificacion
         </button>
-      </div>
+      </section>
     </>
   )
 }
