@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import Header from '../components/Header'
-import AddProject from '../components/AddProyect'
-import ViewConsultors from '../components/ViewConsultors'
-import ViewProject from '../components/ViewProject'
 import { getProyectRequest, getConsultantsRequest } from '../api/auth'
+import NavMenu from '../components/NavMenu'
+import RenderInforAdmin from '../components/RenderInforAdmin'
+import useSwitch from '../hooks/useSwitch'
+import { NavOpen } from '../components/Icons'
 
 const AdminDash = () => {
+  const { show, changeShow } = useSwitch();
   const [showAddProject, setShowAddProject] = useState(false)
   const [showViewProject, setShowViewProject] = useState(true)
   const [showConsultants, setShowConsultants] = useState(false)
@@ -62,51 +63,31 @@ const AdminDash = () => {
   }
 
   return (
-    <main>
-      <Header />
-      <div className='flex justify-evenly items-center gap-6'>
-        <button
-          type='button'
-          className='bg-violet-600 p-3 text-white rounded'
-          onClick={handleAddProjectClick}
-        >
-          Crear Proyecto
-        </button>
-        <button
-          type='button'
-          className='bg-violet-600 p-3 text-white rounded'
-          onClick={handleViewProjectClick}
-        >
-          Ver Proyectos
-        </button>
-        <button
-          type='button'
-          className='bg-violet-600 p-3 text-white rounded'
-          onClick={handleViewConsultantsClick}
-        >
-          Ver Consultores
-        </button>
-      </div>
-
-      {loading || consultantsLoading ? ( // Mostrar el estado de carga mientras se cargan los proyectos o los consultores
-        <p>Cargando...</p>
-      ) : (
-        <>
-          {showAddProject && <AddProject onProjectAdded={handleProjectAdded} />}
-          {showConsultants && <ViewConsultors consultors={consultants} />}
-          {showViewProject && (
-            <div>
-              {projects.length > 0 ? (
-                projects.map((project) => (
-                  <ViewProject key={project.id} project={project} />
-                ))
-              ) : (
-                <p>Aún no tienes proyectos. ¡Crea uno ahora!</p>
-              )}
-            </div>
-          )}
-        </>
-      )}
+    
+    <main className='lg:flex lg:min-h-screen'>
+      <button
+            onClick={changeShow}
+            className="fixed right-[10%] bottom-[6%] md:right-[12%] md:bottom-[8%] bg-gray-800 cursor-pointer p-2 rounded-full z-10 lg:hidden"
+          >
+            <NavOpen />
+      </button>
+      <NavMenu
+        show={show}
+        changeShow={changeShow}
+        handleAddProjectClick={handleAddProjectClick}
+        handleViewProjectClick={handleViewProjectClick}
+        handleViewConsultantsClick={handleViewConsultantsClick}
+      />
+      <RenderInforAdmin 
+        loading={loading}
+        consultantsLoading={consultantsLoading}
+        showAddProject={showAddProject}
+        showConsultants={showConsultants}
+        showViewProject={showViewProject}
+        projects={projects}
+        consultants={consultants}
+        handleProjectAdded={handleProjectAdded}
+      />
     </main>
   )
 }
