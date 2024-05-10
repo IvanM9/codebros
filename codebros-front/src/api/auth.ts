@@ -21,7 +21,6 @@ export const registerRequest = async (data: DraftDeveloper) => {
 export const registerInformationConsult = async (data: ApplicantType) => {
     try {
         const response = await authApi.post('/users/register-information', data);
-        console.log(response);
         return response;
     } catch (error) {
         return error
@@ -32,7 +31,25 @@ export const registerInformationConsult = async (data: ApplicantType) => {
 export const postProyectRequest = async (data: ProjectType) => {
     try {
         const response = await authApi.post('/projects', data);
-        console.log(response)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
+export const getProyectRequest = async () => {
+    try {
+        const response = await authApi.get('/projects')
+        return response;
+
+    } catch (error) {
+        return error
+    }
+}
+
+export const getConsultantsRequest = async () => {
+    try {
+        const response = await authApi.get('/users/consultants')
         return response;
     } catch (error) {
         return error
