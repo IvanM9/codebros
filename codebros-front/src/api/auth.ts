@@ -1,7 +1,6 @@
 import axios from "axios";
-import type { LoginUser, DraftDeveloper } from '../types'
+import type { LoginUser, DraftDeveloper, ApplicantType, ProjectType } from '../types'
 import { authApi } from '../libs/axios';
-import ColorChangingBackground from "../pages/Landing";
 
 
 export const loginRequest = async (data: LoginUser) => {
@@ -19,17 +18,29 @@ export const registerRequest = async (data: DraftDeveloper) => {
     }
 }
 
-
-export const registerInformationConsult = async (data) => {
+export const registerInformationConsult = async (data: ApplicantType) => {
     try {
         const response = await authApi.post('/users/register-information', data);
         console.log(response);
         return response;
     } catch (error) {
         return error
-        throw error;
+
     }
 };
+
+export const postProyectRequest = async (data: ProjectType) => {
+    try {
+        const response = await authApi.post('/projects', data);
+        console.log(response)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
+
+
 export const profileRequest = async () => {
     await axios.get("https://codebros.onrender.com/api/users/consultants?isBusy=true")
 }
