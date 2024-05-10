@@ -155,7 +155,7 @@ model Project {
   duration      String?
   status        Boolean   @default(true)
   remote        Boolean   @default(false)
-  budget        Decimal?
+  budget        Decimal?  @db.Decimal(10, 2)
   client        String?
 
   requiredSkills     Skill[]

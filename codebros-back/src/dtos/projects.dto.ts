@@ -44,7 +44,7 @@ export class CreateProjectDto {
   remote: boolean;
 
   @ApiProperty()
-  @IsDecimal()
+  @IsDecimal({ decimal_digits: '2' })
   @IsOptional()
   budget?: string;
 

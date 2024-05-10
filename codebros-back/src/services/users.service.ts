@@ -140,10 +140,10 @@ export class UsersService {
     return { message: 'Se ha completado la información correctamente' };
   }
 
-  async getConsultant(userId: string) {
+  async getConsultantById(consultantId: string) {
     const consultant = await this.db.consultant.findUnique({
       where: {
-        userId: userId,
+        id: consultantId,
       },
       select: {
         location: true,
@@ -279,5 +279,76 @@ export class UsersService {
     });
 
     return { data: consultants };
+  }
+
+  async getConsultantLoggedIn(userId: string) {
+    const consultant = await this.db.consultant.findUnique({
+      where: {
+        userId,
+      },
+      select: {
+        location: true,
+        timeZone: true,
+        employmentStatus: true,
+        availableHours: true,
+        willingToTravel: true,
+        provisionForRemoteWork: true,
+        feeFees: true,
+        portfolio: true,
+        linkedIn: true,
+        github: true,
+        isBusy: true,
+        user: {
+          select: {
+            email: true,
+            firstName: true,
+            lastName: true,
+            phone: true,
+          },
+        },
+        certifications: {
+          select: {
+            id: true,
+            name: true,
+            authority: true,
+            startDate: true,
+            endDate: true,
+            license: true,
+            url: true,
+          },
+        },
+        experiences: {
+          select: {
+            company: true,
+            position: true,
+            description: true,
+            endDate: true,
+            industry: true,
+            location: true,
+            startDate: true,
+            title: true,
+          },
+        },
+        languages: {
+          select: {
+            id: true,
+            level: true,
+            name: true,
+          },
+        },
+        skills: {
+          select: {
+            name: true,
+            type: true,
+          },
+        },
+      },
+    });
+
+    if (!consultant) {
+      throw new NotFoundException('Consultor no encontrado');
+    }
+
+    return { data: consultant };
   }
 }
