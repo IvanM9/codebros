@@ -35,13 +35,14 @@ const AdditionalInformation = ({ register, errors }) => {
             htmlFor='portfolio'
             className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
-            Portafolio
+            Portafolio*
           </label>
           <input
             type='url'
             id='portfolio'
             placeholder='https://portfolio.com'
             {...register('portfolio', {
+              required: 'El campo Portfolio es obligatorio',
               pattern: {
                 value: /^(ftp|http|https):\/\/[^ "]+$/,
                 message: 'Por favor ingrese un enlace válido',
@@ -49,9 +50,7 @@ const AdditionalInformation = ({ register, errors }) => {
             })}
             className='border-gray-800 input px-[10px] py-[11px] text-sm bg-transparent border-2 rounded-[5px] w-full block focus:outline-none placeholder:text-black/50'
           />
-          {errors.portfolio && (
-            <Error>{errors.portfolio?.message?.toString()}</Error>
-          )}
+          {errors.portfolio && <Error>{errors.portfolio?.message}</Error>}
         </div>
 
         <div className='input flex flex-col w-full static'>
