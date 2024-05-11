@@ -28,7 +28,7 @@ const ColorChangingBackground: React.FC = () => {
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center ${colors[colorIndex]}`}>
       <div className={`fixed top-0 left-0 m-4 p-2 rounded-full ${colors[colorIndex]}`}>
-        <img src={logoImage} alt="Logo" className="h-12" />
+        <img src={logoImage} alt="Logo" className="h-20 w-32" />
       </div>
       <Link href="/login">
         <div className="fixed top-0 right-0 m-4 flex inherits items-center">
@@ -52,7 +52,7 @@ const ColorChangingBackground: React.FC = () => {
             <h1 className="text-black text-4xl font-bold mb-2">MEJORES RECLUTADORES</h1>
             <h1 className="text-black text-4xl font-bold mb-4">TE ENCUENTRE</h1>
           </div>
-          <p className="text-black text-lg">pipipipipipipipi</p>
+          
           <Link href="/register">
             <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 mt-4">
               registrate

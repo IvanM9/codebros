@@ -68,9 +68,10 @@ const ConsultDash = () => {
     const datainfo = await registerInformationConsult(formData)
     if (datainfo?.status === 201 || datainfo?.status === 200) {
       toast.success(datainfo?.data.message)
-      navigate('/Post-Dash')
+      navigate('/post-dash')
     } else {
       toast.error(datainfo?.response.data.message)
+      navigate('/post-dash')
     }
   }
 
