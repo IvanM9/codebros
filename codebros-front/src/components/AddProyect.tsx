@@ -44,8 +44,10 @@ const AddProyect = (onProjectAdded) => {
   }
   return (
     <>
-      <p className='absolute top-16 lg:top-5 text-2xl font-bold text-gray-900'>Nuevo Proyecto</p>
-      <form onSubmit={handleSubmit(onSubmit)} className='w-full mt-10' >
+      <p className='absolute top-16 lg:top-5 text-2xl font-bold text-gray-900'>
+        Nuevo Proyecto
+      </p>
+      <form onSubmit={handleSubmit(onSubmit)} className='w-full mt-10'>
         <div className='grid grid-cols-2 gap-6 mb-10 w-full'>
           <div className='input flex flex-col w-full static'>
             <label
@@ -177,8 +179,8 @@ const AddProyect = (onProjectAdded) => {
             {errors.client && <Error>{errors.client?.message}</Error>}
           </div>
         </div>
-        <div className="w-flex flex flex-col gap-4 items-center justify-center">
-            {/*SKILLS */}
+        <div className='w-flex flex flex-col gap-4 items-center justify-center'>
+          {/*SKILLS */}
           <section className='w-full'>
             <p className='text-center text-xl font-bold  mb-3 uppercase'>
               Agrega tus skills
@@ -308,7 +310,6 @@ const AddProyect = (onProjectAdded) => {
               Agregar Idioma
             </button>
           </section>
-
         </div>
         <div className='mt-6'>
           <button

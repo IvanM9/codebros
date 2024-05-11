@@ -1,3 +1,5 @@
+import { useLocation } from 'wouter'
+import { useAuthStore } from '../store/auth'
 import Header from './Header'
 import { Close, LogOut } from './Icons'
 
@@ -5,9 +7,12 @@ const NavMenu = ({
   handleAddProjectClick,
   handleViewProjectClick,
   handleViewConsultantsClick,
+  handleEmpajeraddProjectClick,
   show,
   changeShow,
 }) => {
+  const logout = useAuthStore((state) => state.logout)
+  const [, navigate] = useLocation()
   return (
     <aside className='bg-gray-900 px-5 flex flex-col text-white font-semibold lg:text-xl lg:w-1/5 lg:fixed lg:h-full lg:overflow-y-scroll xl:overflow-hidden'>
       <div className='py-3'>
@@ -32,7 +37,14 @@ const NavMenu = ({
               className='px-2 py-3 rounded-md bg-gray-600 hover:bg-gray-700  transition-color'
               onClick={handleViewProjectClick}
             >
-              Ver Proyectos
+              Proyectos sin emparejar
+            </button>
+            <button
+              type='button'
+              className='px-2 py-3 rounded-md bg-gray-600 hover:bg-gray-700  transition-color'
+              onClick={handleEmpajeraddProjectClick}
+            >
+              Proyectos emparejados
             </button>
             <button
               type='button'
@@ -42,7 +54,13 @@ const NavMenu = ({
               Ver Consultores
             </button>
           </div>
-          <button className='w-full flex items-center justify-center gap-2 mt-4 px-2 py-3 rounded-md bg-gray-600 hover:bg-gray-700  transition-color'>
+          <button
+            className='w-full flex items-center justify-center gap-2 mt-4 px-2 py-3 rounded-md bg-gray-600 hover:bg-gray-700  transition-color'
+            onClick={() => {
+              logout()
+              navigate('/landing')
+            }}
+          >
             <LogOut />
             <p>Cerrar Cesion</p>
           </button>

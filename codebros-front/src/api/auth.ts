@@ -38,6 +38,7 @@ export const postProyectRequest = async (data: ProjectType) => {
 }
 
 export const getProyectRequest = async (matched) => {
+    console.log(matched)
     try {
         const response = await authApi.get(`/projects/all/${matched}`)
         return response;
@@ -59,6 +60,26 @@ export const getConsultantsRequest = async () => {
 export const getConsultantsRequestId = async (consultantId) => {
     try {
         const response = await authApi.get(`/users/consultant/${consultantId}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
+export const getMatchingsRequest = async (projectId) => {
+    try {
+        const response = await authApi.get(`/ai/matching/${projectId}`)
+        console.log(response)
+        return response;
+
+    } catch (error) {
+        return error
+    }
+}
+
+export const deleteProjectRequest = async (projectId) => {
+    try {
+        const response = await authApi.delete(`/projects/${projectId}`)
         return response;
     } catch (error) {
         return error
