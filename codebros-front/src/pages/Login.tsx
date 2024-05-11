@@ -67,10 +67,10 @@ const Login = () => {
       <div className='absolute top-0 left-0 m-4'>
         <img src={logoImage} alt='Logo' className='h-12' />
       </div>
-      <div className='bg-gray-900 p-8 rounded-lg text-white md:w-1/2 lg:w-2/5 mx-5 relative'>
+      <div className='bg-gray-700 p-8 rounded-lg text-white md:w-1/2 lg:w-2/5 mx-5 relative'>
         <div className='flex justify-center mb-4'>
           <div className='bg-white rounded-full '>
-            <img src={emailLogo} alt='Email Logo' className='h-12' />
+            <img src={emailLogo} alt='Email Logo' className='h-20 w-50' />
           </div>
         </div>
         <hr className='border-gray-700 mb-4' />
