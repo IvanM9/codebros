@@ -100,37 +100,33 @@ export class UsersService {
           throw new BadRequestException('Información ya registrada');
         });
 
-      const certifications = data.certifications.forEach(
-        async (certification) => {
-          await db.certification
-            .create({
-              data: {
-                consultantId: consultant.id,
-                name: certification.name,
-                authority: certification.authority,
-                license: certification.license,
-                startDate: certification.startDate,
-                endDate: certification.endDate,
-                url: certification.url,
-              },
-            })
-            .catch(() => {
-              throw new BadRequestException(
-                'Error al registrar certificaciones',
-              );
-            });
-        },
-      );
+      const certifications = data.certifications?.map(async (certification) => {
+        await db.certification
+          .create({
+            data: {
+              consultantId: consultant.id,
+              name: certification.name,
+              authority: certification.authority,
+              license: certification.license,
+              startDate: certification.startDate,
+              endDate: certification.endDate,
+              url: certification.url,
+            },
+          })
+          .catch(() => {
+            throw new BadRequestException('Error al registrar certificaciones');
+          });
+      });
 
-      const experiences = data.experiences.map(async (experience) => {
+      const experiences = data.experiences?.map(async (experience) => {
         await this.experienceService.addExperience(experience, consultant.id);
       });
 
-      const languages = data.languages.map(async (language) => {
+      const languages = data.languages?.map(async (language) => {
         await this.languageService.addLanguage(language, consultant.id);
       });
 
-      const skills = data.skills.map(async (skill) => {
+      const skills = data.skills?.map(async (skill) => {
         await this.skillService.addSkill(skill, consultant.id);
       });
 
@@ -140,10 +136,10 @@ export class UsersService {
     return { message: 'Se ha completado la información correctamente' };
   }
 
-  async getConsultant(userId: string) {
+  async getConsultantById(consultantId: string) {
     const consultant = await this.db.consultant.findUnique({
       where: {
-        userId: userId,
+        id: consultantId,
       },
       select: {
         location: true,
@@ -279,5 +275,76 @@ export class UsersService {
     });
 
     return { data: consultants };
+  }
+
+  async getConsultantLoggedIn(userId: string) {
+    const consultant = await this.db.consultant.findUnique({
+      where: {
+        userId,
+      },
+      select: {
+        location: true,
+        timeZone: true,
+        employmentStatus: true,
+        availableHours: true,
+        willingToTravel: true,
+        provisionForRemoteWork: true,
+        feeFees: true,
+        portfolio: true,
+        linkedIn: true,
+        github: true,
+        isBusy: true,
+        user: {
+          select: {
+            email: true,
+            firstName: true,
+            lastName: true,
+            phone: true,
+          },
+        },
+        certifications: {
+          select: {
+            id: true,
+            name: true,
+            authority: true,
+            startDate: true,
+            endDate: true,
+            license: true,
+            url: true,
+          },
+        },
+        experiences: {
+          select: {
+            company: true,
+            position: true,
+            description: true,
+            endDate: true,
+            industry: true,
+            location: true,
+            startDate: true,
+            title: true,
+          },
+        },
+        languages: {
+          select: {
+            id: true,
+            level: true,
+            name: true,
+          },
+        },
+        skills: {
+          select: {
+            name: true,
+            type: true,
+          },
+        },
+      },
+    });
+
+    if (!consultant) {
+      throw new NotFoundException('Consultor no encontrado');
+    }
+
+    return { data: consultant };
   }
 }

@@ -46,7 +46,7 @@ export class ProjectsService {
     return { message: 'Proyecto creado correctamente' };
   }
 
-  async getProjects() {
+  async getProjects(matched: boolean) {
     return {
       data: await this.db.project.findMany({
         include: {
@@ -56,19 +56,63 @@ export class ProjectsService {
             select: {
               consultant: {
                 select: {
+                  id: true,
                   user: {
                     select: {
                       firstName: true,
-                      email: true,
+                      lastName: true,
                     },
                   },
                 },
               },
-              status: true,
             },
           },
         },
+        where: {
+          projectConsultants: matched ? { some: {} } : { none: {} },
+          status: true,
+        },
       }),
     };
+  }
+
+  async deleteProject(projectId: string) {
+    await this.db.project
+      .update({
+        where: {
+          id: projectId,
+        },
+        data: {
+          status: false,
+        },
+      })
+      .catch(() => {
+        throw new BadRequestException('Error al eliminar el proyecto');
+      });
+
+    return { message: 'Proyecto eliminado correctamente' };
+  }
+
+  async updateProject(projectId: string, data: CreateProjectDto) {
+    await this.db.project
+      .update({
+        where: {
+          id: projectId,
+        },
+        data: {
+          name: data.name,
+          description: data.description,
+          teamSize: data.teamSize,
+          duration: data.duration,
+          remote: data.remote,
+          budget: data.budget,
+          client: data.client,
+        },
+      })
+      .catch(() => {
+        throw new BadRequestException('Error al actualizar el proyecto');
+      });
+
+    return { message: 'Proyecto actualizado correctamente' };
   }
 }

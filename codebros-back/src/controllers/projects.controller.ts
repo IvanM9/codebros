@@ -1,5 +1,20 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseBoolPipe,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateProjectDto } from 'src/dtos/projects.dto';
 import { CurrentUser } from 'src/security/jwt-strategy/auth.decorator';
 import { InfoUserInterface } from 'src/security/jwt-strategy/info-user.interface';
@@ -26,9 +41,30 @@ export class ProjectsController {
     return this.service.createProject(data, id);
   }
 
-  @Get()
+  @Get('all/:matched')
   @ApiOperation({ summary: 'Obtener todos los proyectos' })
-  async getProjects() {
-    return this.service.getProjects();
+  @ApiParam({
+    name: 'matched',
+    required: true,
+    type: Boolean,
+    description: 'Indica si se quieren obtener los proyectos emparejados o no',
+  })
+  async getProjects(@Param('matched', ParseBoolPipe) matched: boolean) {
+    return this.service.getProjects(matched);
+  }
+
+  @Delete(':projectId')
+  @ApiOperation({ summary: 'Eliminar un proyecto' })
+  async deleteProject(@Param('projectId') projectId: string) {
+    return this.service.deleteProject(projectId);
+  }
+
+  @Patch(':projectId')
+  @ApiOperation({ summary: 'Actualizar un proyecto' })
+  async updateProject(
+    @Param('projectId') projectId: string,
+    @Body() data: CreateProjectDto,
+  ) {
+    return this.service.updateProject(projectId, data);
   }
 }
