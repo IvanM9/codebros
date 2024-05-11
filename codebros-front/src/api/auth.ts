@@ -37,9 +37,9 @@ export const postProyectRequest = async (data: ProjectType) => {
     }
 }
 
-export const getProyectRequest = async () => {
+export const getProyectRequest = async (matched) => {
     try {
-        const response = await authApi.get('/projects')
+        const response = await authApi.get(`/projects/all/${matched}`)
         return response;
 
     } catch (error) {
@@ -55,6 +55,16 @@ export const getConsultantsRequest = async () => {
         return error
     }
 }
+
+export const getConsultantsRequestId = async (consultantId) => {
+    try {
+        const response = await authApi.get(`/users/consultant/${consultantId}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
 
 
 
