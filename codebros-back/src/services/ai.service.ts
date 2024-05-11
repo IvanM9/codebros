@@ -128,7 +128,9 @@ export class AiService {
       return { data: result };
     } catch (error) {
       console.error(error);
-      throw new InternalServerErrorException('Error al generar el contenido');
+      throw new InternalServerErrorException(
+        'Error al emparejar. Intente nuevamente',
+      );
     }
 
     // return { data: prompt };
