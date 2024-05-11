@@ -1,6 +1,6 @@
 export function generatePromtMatching(project: any, consultants: any[]) {
   return `A continuación te pasaré un JSON con los datos del proyecto y también un array con los datos de los consultores. Deberás hacer un matching entre los consultores y el proyecto, y devolver los consultores más apropiados para el proyecto.
-  La cantidad de consultores que devuelvas depende si en el proyecto se especifíca el tamaño del equipo o de otro modo es a tu criterio, pero recuerda que deben ser los más apropiados para el proyecto. 
+  La cantidad de consultores que devuelvas depende si en el proyecto se determina el tamaño del equipo o de otro modo es a tu criterio, pero recuerda que deben ser los más apropiados para el proyecto. 
 
 
   Detalles del Proyecto:

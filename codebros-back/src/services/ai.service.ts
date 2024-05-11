@@ -106,7 +106,6 @@ export class AiService {
 
     try {
       const prompt = generatePromtMatching(project, consultants);
-      console.log('prompt: ', prompt);
       const response = (await this.model.generateContent(prompt)).response;
 
       const result = JSON.parse(response.text());
