@@ -26,7 +26,7 @@ const AdditionalInformation = ({ register, errors }) => {
 
   return (
     <>
-      <p className='text-center text-2xl font-bold mt-20 mb-5 uppercase'>
+      <p className='text-left text-1xl font-bold mt-20 mb-5 uppercase'>
         Informacion adicional
       </p>
       <section className='flex flex-col gap-3'>
@@ -56,7 +56,7 @@ const AdditionalInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='linkedIn'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             Linkedin*
           </label>
@@ -79,7 +79,7 @@ const AdditionalInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='github'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             GitHub*
           </label>
@@ -113,7 +113,7 @@ const AdditionalInformation = ({ register, errors }) => {
             <div className='w-full justify-center items-center'>
               <label
                 htmlFor={`name_${skill.id}`}
-                className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-white w-fit'
+                className='text-black font-semibold relative block top-2 -mt-6 ml-[7px] px-[3px] bg-slate-200 w-fit'
               >
                 Skill
               </label>

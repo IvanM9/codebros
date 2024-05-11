@@ -16,8 +16,7 @@ const RenderInforAdmin = ({
       <section className='w-full lg:w-4/5 flex items-center justify-center ml-auto p-5'>
         <div className='w-full lg:w-4/5 flex justify-center'>
           {loading || consultantsLoading ? (
-            // Mostrar el estado de carga mientras se cargan los proyectos o los consultores
-            <p>Cargando...</p>
+            <div className='loader'></div>
           ) : (
             <>
               {showAddProject && (

@@ -3,14 +3,14 @@ import { Error } from '../components/Error'
 const MainInformation = ({ register, errors }) => {
   return (
     <>
-      <p className='text-center text-2xl font-bold py-4 uppercase'>
-        Datos principales
+      <p className='text-center text-4xl font-bold py-4 uppercase'>
+        MIS DATOS
       </p>
       <div className='grid grid-cols-2 gap-6 mb-10'>
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='country'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             Pais*
           </label>
@@ -28,7 +28,7 @@ const MainInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='city'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             Ciudad*
           </label>
@@ -46,7 +46,7 @@ const MainInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='employmentStatus'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             Tipo de contrato*
           </label>
@@ -69,7 +69,7 @@ const MainInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='avalibleHours'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             Horas Disponibles*
           </label>
@@ -91,7 +91,7 @@ const MainInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='willingToTravel'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             ¿Dispuesto a viajar?*
           </label>
@@ -113,7 +113,7 @@ const MainInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='provisionForRemoteWork'
-            className='text-black text-sm font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black text-sm font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             ¿Disponible para trabajo remoto?*
           </label>
@@ -135,7 +135,7 @@ const MainInformation = ({ register, errors }) => {
         <div className='input flex flex-col w-full static'>
           <label
             htmlFor='feeFees'
-            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-white w-fit'
+            className='text-black font-semibold relative block top-2 ml-[7px] px-[3px] bg-slate-200 w-fit'
           >
             Tarifa por hora*
           </label>
