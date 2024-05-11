@@ -162,3 +162,11 @@ export const useLanguagesStore = create<LanguagesFormState>((set) => ({
 }));
 
 
+
+export const useConsultorDetailsStore = create((set) => ({
+    consultorDetails: null,
+    setConsultorDetails: (details) => set({ consultorDetails: details }),
+}));
+
+
+

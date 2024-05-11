@@ -100,37 +100,33 @@ export class UsersService {
           throw new BadRequestException('Información ya registrada');
         });
 
-      const certifications = data.certifications.forEach(
-        async (certification) => {
-          await db.certification
-            .create({
-              data: {
-                consultantId: consultant.id,
-                name: certification.name,
-                authority: certification.authority,
-                license: certification.license,
-                startDate: certification.startDate,
-                endDate: certification.endDate,
-                url: certification.url,
-              },
-            })
-            .catch(() => {
-              throw new BadRequestException(
-                'Error al registrar certificaciones',
-              );
-            });
-        },
-      );
+      const certifications = data.certifications?.map(async (certification) => {
+        await db.certification
+          .create({
+            data: {
+              consultantId: consultant.id,
+              name: certification.name,
+              authority: certification.authority,
+              license: certification.license,
+              startDate: certification.startDate,
+              endDate: certification.endDate,
+              url: certification.url,
+            },
+          })
+          .catch(() => {
+            throw new BadRequestException('Error al registrar certificaciones');
+          });
+      });
 
-      const experiences = data.experiences.map(async (experience) => {
+      const experiences = data.experiences?.map(async (experience) => {
         await this.experienceService.addExperience(experience, consultant.id);
       });
 
-      const languages = data.languages.map(async (language) => {
+      const languages = data.languages?.map(async (language) => {
         await this.languageService.addLanguage(language, consultant.id);
       });
 
-      const skills = data.skills.map(async (skill) => {
+      const skills = data.skills?.map(async (skill) => {
         await this.skillService.addSkill(skill, consultant.id);
       });
 

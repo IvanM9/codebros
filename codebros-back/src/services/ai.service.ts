@@ -106,7 +106,6 @@ export class AiService {
 
     try {
       const prompt = generatePromtMatching(project, consultants);
-      console.log('prompt: ', prompt);
       const response = (await this.model.generateContent(prompt)).response;
 
       const result = JSON.parse(response.text());
@@ -129,7 +128,9 @@ export class AiService {
       return { data: result };
     } catch (error) {
       console.error(error);
-      throw new InternalServerErrorException('Error al generar el contenido');
+      throw new InternalServerErrorException(
+        'Error al emparejar. Intente nuevamente',
+      );
     }
 
     // return { data: prompt };

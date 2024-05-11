@@ -6,6 +6,8 @@ export type Developer = {
     lastName: string
     phone: string
 }
+export type DraftDeveloper = Omit<Developer, 'id'>
+
 
 export type LoginUser = {
     password: string
@@ -17,38 +19,40 @@ export type PersonalInfo = {
     timeZone: string;
 };
 
-export type Skill = {
+type SkillsType = {
     name: string;
-    type: 'SOFT' | "HARD";
+    type: "HARD" | "SOFT";
 };
 
-export type Language = {
+type LanguagesType = {
     name: string;
     level: "BASIC" | "INTERMEDIATE" | "ADVANCED";
 };
 
-export type Experience = {
+type ExperiencesType = {
     title: string;
     company: string;
     position: string;
     location: string;
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
     description: string;
     industry: string;
 };
 
-export type Certification = {
+type CertificationsType = {
     name: string;
     authority: string;
     license: string;
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
     url: string;
 };
 
-export type AdditionalInfo = {
-    employmentStatus: "FULL_TIME" | "PART_TIME" | "CONTRACT" | "FREELANCE" | "INTERN" | "OTHER";
+export type ApplicantType = {
+    location: string;
+    timeZone: string;
+    employmentStatus: "FULL_TIME" | "PART_TIME" | "CONTRACT";
     availableHours: number;
     willingToTravel: boolean;
     provisionForRemoteWork: boolean;
@@ -56,15 +60,10 @@ export type AdditionalInfo = {
     portfolio: string;
     linkedIn: string;
     github: string;
-    skills: Skill[];
-    languages: Language[];
-    experiences: Experience[];
-    certifications: Certification[];
-};
-
-export type ProfileData = {
-    personalInfo: PersonalInfo;
-    additionalInfo: AdditionalInfo;
+    skills: SkillsType[];
+    languages: LanguagesType[];
+    experiences: ExperiencesType[];
+    certifications: CertificationsType[];
 };
 
 export interface FormData {
@@ -80,4 +79,25 @@ export interface FormData {
     github: string;
 }
 
-export type DraftDeveloper = Omit<Developer, 'id'> 
+
+type RequiredSkillsType = {
+    name: string;
+    type: "HARD" | "SOFT";
+};
+
+type RequiredLanguagesType = {
+    name: string;
+    level: "BASIC" | "INTERMEDIATE" | "ADVANCED";
+};
+
+export type ProjectType = {
+    name: string;
+    description: string;
+    requiredSkills: RequiredSkillsType[];
+    requiredLanguages: RequiredLanguagesType[];
+    teamSize: number;
+    duration: string;
+    remote: boolean;
+    budget: string;
+    client: string;
+};
