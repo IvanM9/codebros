@@ -1,3 +1,4 @@
+import logoImg from '../assets/original-removebg-preview.png'
 const Header: React.FC = () => {
   return (
     <header>
